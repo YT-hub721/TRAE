@@ -597,41 +597,6 @@ body {
   display: block;
 }
 
-.code-input-row {
-  display: flex;
-  gap: 10px;
-}
-
-.code-input {
-  flex: 1;
-}
-
-.send-code-btn {
-  flex-shrink: 0;
-  padding: 10px 16px;
-  background: var(--color-primary-bg);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary-light);
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  white-space: nowrap;
-}
-
-.send-code-btn:hover:not(:disabled) {
-  background: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
-}
-
-.send-code-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .checkbox-group {
   display: flex;
   align-items: flex-start;
@@ -1126,10 +1091,5 @@ body {
   .submit-btn {
     padding: 12px 24px;
     font-size: 14px;
-  }
-
-  .send-code-btn {
-    padding: 10px 12px;
-    font-size: 12px;
   }
 }

@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!form) return;
 
   var submitBtn = document.getElementById('submitBtn');
-  var sendCodeBtn = document.getElementById('sendCodeBtn');
   var selectedCoursesContainer = document.getElementById('selectedCourses');
   var courseInput = document.getElementById('courseInput');
   var selectedCourses = [];
@@ -37,14 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
       required: true,
       messages: {
         required: '请至少选择一门课程'
-      }
-    },
-    code: {
-      required: true,
-      pattern: /^\d{6}$/,
-      messages: {
-        required: '请输入验证码',
-        pattern: '请输入 6 位数字验证码'
       }
     },
     agree: {
@@ -245,46 +236,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // ====== 验证码倒计时 ======
-  var countdown = 0;
-  var countdownTimer = null;
-
-  if (sendCodeBtn) {
-    sendCodeBtn.addEventListener('click', function () {
-      if (countdown > 0) return;
-
-      var phoneField = form.querySelector('[name="phone"]');
-      if (!phoneField || !phoneField.value.trim()) {
-        showError('phone', '请先输入手机号');
-        phoneField.focus();
-        return;
-      }
-
-      if (!/^1[3-9]\d{9}$/.test(phoneField.value.trim())) {
-        showError('phone', '请输入有效的手机号码');
-        phoneField.focus();
-        return;
-      }
-
-      clearError('phone');
-
-      countdown = 60;
-      sendCodeBtn.disabled = true;
-      sendCodeBtn.textContent = countdown + 's 后重发';
-
-      countdownTimer = setInterval(function () {
-        countdown--;
-        if (countdown <= 0) {
-          clearInterval(countdownTimer);
-          sendCodeBtn.disabled = false;
-          sendCodeBtn.textContent = '获取验证码';
-        } else {
-          sendCodeBtn.textContent = countdown + 's 后重发';
-        }
-      }, 1000);
-    });
-  }
-
   // ====== 表单提交 ======
   function encodeFormData(formData) {
     return Array.from(formData.entries())
@@ -375,13 +326,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var phoneInput = form.querySelector('[name="phone"]');
   if (phoneInput) {
     phoneInput.addEventListener('input', function () {
-      this.value = this.value.replace(/[^\d]/g, '');
-    });
-  }
-
-  var codeInput = form.querySelector('[name="code"]');
-  if (codeInput) {
-    codeInput.addEventListener('input', function () {
       this.value = this.value.replace(/[^\d]/g, '');
     });
   }
