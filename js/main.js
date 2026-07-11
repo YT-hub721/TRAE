@@ -237,18 +237,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ====== 表单提交 ======
-  function encodeFormData(formData) {
-    return Array.from(formData.entries())
-      .map(function (pair) {
-        return encodeURIComponent(pair[0]) + '=' + encodeURIComponent(pair[1]);
-      })
-      .join('&');
-  }
-
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-
+  form.addEventListener('submit', function (e) {
     if (!validateForm()) {
+      e.preventDefault();
       var firstError = form.querySelector('.error');
       if (firstError) {
         firstError.focus();
@@ -258,29 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     submitBtn.disabled = true;
     submitBtn.classList.add('loading');
-
-    try {
-      var formData = new FormData(form);
-
-      var response = await fetch('/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: encodeFormData(formData)
-      });
-
-      if (response.ok) {
-        window.location.href = '/success.html';
-      } else {
-        throw new Error('提交失败');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      submitBtn.disabled = false;
-      submitBtn.classList.remove('loading');
-      alert('提交失败，请稍后重试。如在本地预览，请部署到 Netlify 后再测试表单功能。');
-    }
   });
 
   // ====== 平滑滚动 ======
